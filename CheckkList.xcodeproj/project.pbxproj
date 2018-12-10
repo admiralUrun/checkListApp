@@ -14,6 +14,8 @@
 		95B0C64821BE8DC700797237 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95B0C64621BE8DC700797237 /* LaunchScreen.storyboard */; };
 		95B0C65321BE8DC700797237 /* CheckkListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0C65221BE8DC700797237 /* CheckkListTests.swift */; };
 		95B0C65E21BE8DC700797237 /* CheckkListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0C65D21BE8DC700797237 /* CheckkListUITests.swift */; };
+		95E4CE1D21BED46C0037FC4F /* ChecklistItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E4CE1C21BED46C0037FC4F /* ChecklistItem.swift */; };
+		95E4CE1F21BEE7D90037FC4F /* TODOlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95E4CE1E21BEE7D90037FC4F /* TODOlist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		95B0C65921BE8DC700797237 /* CheckkListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheckkListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		95B0C65D21BE8DC700797237 /* CheckkListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckkListUITests.swift; sourceTree = "<group>"; };
 		95B0C65F21BE8DC700797237 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		95E4CE1C21BED46C0037FC4F /* ChecklistItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChecklistItem.swift; sourceTree = "<group>"; };
+		95E4CE1E21BEE7D90037FC4F /* TODOlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TODOlist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +103,12 @@
 			children = (
 				95B0C63D21BE8DC500797237 /* AppDelegate.swift */,
 				95B0C63F21BE8DC500797237 /* CheckListViewController.swift */,
+				95E4CE1E21BEE7D90037FC4F /* TODOlist.swift */,
 				95B0C64121BE8DC500797237 /* Main.storyboard */,
 				95B0C64421BE8DC700797237 /* Assets.xcassets */,
 				95B0C64621BE8DC700797237 /* LaunchScreen.storyboard */,
 				95B0C64921BE8DC700797237 /* Info.plist */,
+				95E4CE1C21BED46C0037FC4F /* ChecklistItem.swift */,
 			);
 			path = CheckkList;
 			sourceTree = "<group>";
@@ -256,8 +262,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95E4CE1F21BEE7D90037FC4F /* TODOlist.swift in Sources */,
 				95B0C64021BE8DC500797237 /* CheckListViewController.swift in Sources */,
 				95B0C63E21BE8DC500797237 /* AppDelegate.swift in Sources */,
+				95E4CE1D21BED46C0037FC4F /* ChecklistItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
