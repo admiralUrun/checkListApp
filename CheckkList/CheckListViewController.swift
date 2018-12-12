@@ -13,10 +13,7 @@ class ChecklistViewController: UITableViewController {
     var todolist : toDOLIst
     
     
-    
-    @IBOutlet weak var textflied: UITextField!
-    
-    
+
     
     @IBAction func addItem(_ sender: Any) {
         

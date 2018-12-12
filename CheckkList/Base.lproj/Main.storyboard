@@ -76,12 +76,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R7Z-VC-d80">
-                                                    <rect key="frame" x="16" y="6" width="330" height="30"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9gP-L3-RS5">
+                                                    <rect key="frame" x="16" y="11" width="323" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="done:" destination="jzq-IV-zH4" eventType="editingDidEndOnExit" id="j7E-qt-Mu8"/>
+                                                        <outlet property="delegate" destination="jzq-IV-zH4" id="Pwf-0v-W3M"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -100,16 +104,21 @@
                                 <action selector="cancel:" destination="jzq-IV-zH4" id="LJX-TO-o9x"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" id="EBF-14-OSf">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Add" id="EBF-14-OSf">
                             <connections>
                                 <action selector="Add:" destination="jzq-IV-zH4" id="kgD-s8-X1f"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addBarButton" destination="EBF-14-OSf" id="4Hh-48-33i"/>
+                        <outlet property="cancel" destination="hhi-2L-yXe" id="7rR-29-Lzk"/>
+                        <outlet property="textfield" destination="9gP-L3-RS5" id="x2T-VQ-kVx"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2sn-hl-X37" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1797.5999999999999" y="72.413793103448285"/>
+            <point key="canvasLocation" x="1791" y="72"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ypx-Fl-pdy">
