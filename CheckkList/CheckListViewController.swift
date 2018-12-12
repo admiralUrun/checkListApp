@@ -13,6 +13,24 @@ class ChecklistViewController: UITableViewController {
     var todolist : toDOLIst
     
     
+    
+    @IBOutlet weak var textflied: UITextField!
+    
+    
+    
+    @IBAction func addItem(_ sender: Any) {
+        
+        let newRowIndex = todolist.todos.count
+        
+        _ = todolist.newTodo()
+        
+        let indexPath = IndexPath(row: newRowIndex, section: 0)
+        let indexPaths = [indexPath]
+        tableView.insertRows(at: indexPaths, with: .automatic)
+        
+    }
+    
+    
     required init?(coder aDecoder: NSCoder) {
         
         todolist = toDOLIst()
@@ -22,7 +40,9 @@ class ChecklistViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,6 +56,15 @@ class ChecklistViewController: UITableViewController {
         configureCheckMark(for: cell, with: item)
         
         return cell
+    }
+    
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
+        todolist.todos.remove(at: indexPath.row)
+        let indexPaths = [indexPath]
+        tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -53,9 +82,9 @@ class ChecklistViewController: UITableViewController {
     
     func configureCheckMark (for cell:UITableViewCell, with item: Checklist) {
         if item.checked {
-            cell.accessoryType = .none
+            cell.accessoryType = .checkmark
         } else {
-            cell.accessoryType =  .checkmark
+            cell.accessoryType =  .none
         }
         item.toggleChecked()
     }

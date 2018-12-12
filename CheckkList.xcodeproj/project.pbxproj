@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95185DB221C02E9A00E569C4 /* AddItemTableViewControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95185DB121C02E9A00E569C4 /* AddItemTableViewControl.swift */; };
 		95B0C63E21BE8DC500797237 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0C63D21BE8DC500797237 /* AppDelegate.swift */; };
 		95B0C64021BE8DC500797237 /* CheckListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95B0C63F21BE8DC500797237 /* CheckListViewController.swift */; };
 		95B0C64321BE8DC500797237 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 95B0C64121BE8DC500797237 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		95185DB121C02E9A00E569C4 /* AddItemTableViewControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemTableViewControl.swift; sourceTree = "<group>"; };
 		95B0C63A21BE8DC500797237 /* CheckkList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CheckkList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		95B0C63D21BE8DC500797237 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		95B0C63F21BE8DC500797237 /* CheckListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckListViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				95B0C64621BE8DC700797237 /* LaunchScreen.storyboard */,
 				95B0C64921BE8DC700797237 /* Info.plist */,
 				95E4CE1C21BED46C0037FC4F /* ChecklistItem.swift */,
+				95185DB121C02E9A00E569C4 /* AddItemTableViewControl.swift */,
 			);
 			path = CheckkList;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 				95E4CE1F21BEE7D90037FC4F /* TODOlist.swift in Sources */,
 				95B0C64021BE8DC500797237 /* CheckListViewController.swift in Sources */,
 				95B0C63E21BE8DC500797237 /* AppDelegate.swift in Sources */,
+				95185DB221C02E9A00E569C4 /* AddItemTableViewControl.swift in Sources */,
 				95E4CE1D21BED46C0037FC4F /* ChecklistItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
