@@ -11,13 +11,14 @@ import UIKit
 protocol AddItemViewControlerDelefate : class {
     func addItemviewControleDidCencel(_ controler: AddItemTableViewControl)
     func addIremViewControler(_ controller: AddItemTableViewControl, didFinishiAdding item:Checklist)
-    
 }
 
 class AddItemTableViewControl: UITableViewController {
     
     
     weak var deleget: AddItemViewControlerDelefate?
+    weak var todolist: toDOLIst?
+    weak var itemToEdit: Checklist?
     
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
@@ -43,13 +44,13 @@ class AddItemTableViewControl: UITableViewController {
         
     }
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        if let item = itemToEdit {
+            title = "Edit item"
+            textfield.text = item.text
+            addBarButton.isEnabled = true
+        }
         navigationItem.largeTitleDisplayMode = .never
         
     }

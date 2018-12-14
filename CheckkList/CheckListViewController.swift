@@ -12,9 +12,6 @@ class ChecklistViewController: UITableViewController {
     
     var todolist : toDOLIst
     
-    
-
-    
     @IBAction func addItem(_ sender: Any) {
         
         let newRowIndex = todolist.todos.count
@@ -78,13 +75,46 @@ class ChecklistViewController: UITableViewController {
     }
     
     func configureCheckMark (for cell:UITableViewCell, with item: Checklist) {
+        guard let checkmark = cell.viewWithTag(1001) as? UILabel else {
+            return
+        }
         if item.checked {
-            cell.accessoryType = .checkmark
+            checkmark.text = "√"
         } else {
-            cell.accessoryType =  .none
+            checkmark.text =  ""
         }
         item.toggleChecked()
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AddItemSegue" {
+            if let addItemViewControler = segue.destination as? AddItemTableViewControl {
+                addItemViewControler.deleget = self
+                addItemViewControler.todolist = todolist
+            }
+        } else if segue.identifier == "EditItem" {
+            if let addItemViewControler = segue.destination as? AddItemTableViewControl {
+                if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                    let item = todolist.todos[indexPath.row]
+                    addItemViewControler.itemToEdit = item
+                }
+            }
+        }
+    }
+    
 }
 
-
+extension ChecklistViewController: AddItemViewControlerDelefate {
+    func addItemviewControleDidCencel(_ controler: AddItemTableViewControl) {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func addIremViewControler(_ controller: AddItemTableViewControl, didFinishiAdding item: Checklist) {
+        navigationController?.popViewController(animated: true)
+        let rowIndex = todolist.todos.count
+        todolist.todos.append(item)
+        let indexPahth = IndexPath(row: rowIndex, section: 0)
+        let indexPahths = [indexPahth]
+        tableView.insertRows(at: indexPahths, with: .automatic)
+    }
+}
