@@ -41,7 +41,7 @@ class toDOLIst  {
     
     func newTodo() -> Checklist {
         let item =  Checklist()
-        item.text = "New todo item"
+        item.text = randomTitle()
         item.checked = true
         todos.append(item)
         return item
@@ -50,9 +50,7 @@ class toDOLIst  {
     
     private func randomTitle() -> String {
         var titles = ["Title", "Car", "Wolf", "cebyek", "kek", "LOL"]
-        
-        let randomNumbe = Int.random(in: 0 ..< titles.count)
-        
+        let randomNumbe = Int.random(in: 0 ..< titles.count - 1)
         return titles[randomNumbe]
     }
     

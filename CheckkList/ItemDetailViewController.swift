@@ -8,15 +8,16 @@
 
 import UIKit
 
-protocol AddItemViewControlerDelefate : class {
-    func addItemviewControleDidCencel(_ controler: AddItemTableViewControl)
-    func addIremViewControler(_ controller: AddItemTableViewControl, didFinishiAdding item:Checklist)
+protocol ItemDetailViewControllerDelegate : class {
+    func itemDitailViewControllerDidCencel(_ controler: ItemDetailViewController)
+    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiAdding item:Checklist)
+    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiEditing item:Checklist )
 }
 
-class AddItemTableViewControl: UITableViewController {
+class ItemDetailViewController: UITableViewController {
     
     
-    weak var deleget: AddItemViewControlerDelefate?
+    weak var deleget: ItemDetailViewControllerDelegate?
     weak var todolist: toDOLIst?
     weak var itemToEdit: Checklist?
     
@@ -26,22 +27,23 @@ class AddItemTableViewControl: UITableViewController {
     @IBOutlet weak var textfield: UITextField!
     
     
-    
-    
     @IBAction func cancel(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        deleget?.addItemviewControleDidCencel(self)
+        deleget?.itemDitailViewControllerDidCencel(self)
     }
     
     @IBAction func done(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
-        let item = Checklist()
-        if let textFieldText = textfield.text {
-            item.text = textFieldText
+        if let item = itemToEdit, let text = textfield.text {
+            item.text = text
+            deleget?.itemDitailViewControllerr(self, didFinishiEditing: item)
+        } else {
+            if let item = todolist?.newTodo() {
+                if let textFieldText = textfield.text {
+                    item.text = textFieldText
+                }
+                item.checked = false
+                deleget?.itemDitailViewControllerr(self, didFinishiAdding: item)
+            }
         }
-        item.checked = false
-        deleget?.addIremViewControler(self, didFinishiAdding: item)
-        
     }
     
     override func viewDidLoad() {
@@ -61,7 +63,7 @@ class AddItemTableViewControl: UITableViewController {
     }
 }
 
-extension AddItemTableViewControl: UITextFieldDelegate {
+extension ItemDetailViewController: UITextFieldDelegate {
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

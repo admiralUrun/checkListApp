@@ -10,10 +10,10 @@ import Foundation
 
 
 
-class Checklist {
+class Checklist: NSObject {
+    
     var text = ""
     var checked = false
-    
     
     func toggleChecked() {
         checked = !checked
