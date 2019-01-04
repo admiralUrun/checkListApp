@@ -107,10 +107,10 @@
 			children = (
 				95B0C63D21BE8DC500797237 /* AppDelegate.swift */,
 				95B0C63F21BE8DC500797237 /* CheckListViewController.swift */,
-				95C5DEA921DFDD6800B7CE27 /* CheckListTableViewCell.swift */,
 				95B0C64121BE8DC500797237 /* Main.storyboard */,
 				95B0C64421BE8DC700797237 /* Assets.xcassets */,
 				95B0C64621BE8DC700797237 /* LaunchScreen.storyboard */,
+				95C5DEA921DFDD6800B7CE27 /* CheckListTableViewCell.swift */,
 				95E4CE1E21BEE7D90037FC4F /* TODOlist.swift */,
 				95E4CE1C21BED46C0037FC4F /* ChecklistItem.swift */,
 				95185DB121C02E9A00E569C4 /* ItemDetailViewController.swift */,
