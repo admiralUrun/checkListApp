@@ -11,17 +11,17 @@ import Foundation
 
 
 
-class toDOLIst  {
+class todoList  {
     
-    var  todos : [Checklist] = []
+    var  todos : [ChecklistItem] = []
     
     init() {
         
-       let row0Item = Checklist()
-       let row1Item = Checklist()
-       let row2Item = Checklist()
-       let row3Item = Checklist()
-       let row4Item = Checklist()
+       let row0Item = ChecklistItem()
+       let row1Item = ChecklistItem()
+       let row2Item = ChecklistItem()
+       let row3Item = ChecklistItem()
+       let row4Item = ChecklistItem()
         
         
         row0Item.text = "Take a jog"
@@ -39,14 +39,21 @@ class toDOLIst  {
     }
     
     
-    func newTodo() -> Checklist {
-        let item =  Checklist()
+    func newTodo() -> ChecklistItem {
+        let item =  ChecklistItem()
         item.text = randomTitle()
         item.checked = true
         todos.append(item)
         return item
     }
     
+    func moveCellInList(item: ChecklistItem, to index: Int) {
+        guard let currentIndex = todos.index(of: item) else {
+            return
+        }
+        todos.remove(at: currentIndex)
+        todos.insert(item, at: index)
+    }
     
     private func randomTitle() -> String {
         var titles = ["Title", "Car", "Wolf", "cebyek", "kek", "LOL"]

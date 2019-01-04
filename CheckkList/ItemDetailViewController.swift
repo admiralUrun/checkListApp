@@ -10,16 +10,16 @@ import UIKit
 
 protocol ItemDetailViewControllerDelegate : class {
     func itemDitailViewControllerDidCencel(_ controler: ItemDetailViewController)
-    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiAdding item:Checklist)
-    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiEditing item:Checklist )
+    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiAdding item:ChecklistItem)
+    func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiEditing item:ChecklistItem )
 }
 
 class ItemDetailViewController: UITableViewController {
     
     
     weak var deleget: ItemDetailViewControllerDelegate?
-    weak var todolist: toDOLIst?
-    weak var itemToEdit: Checklist?
+    weak var todolist: todoList?
+    weak var itemToEdit: ChecklistItem?
     
     
     @IBOutlet weak var addBarButton: UIBarButtonItem!
