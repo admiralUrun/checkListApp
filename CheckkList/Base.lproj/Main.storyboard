@@ -62,11 +62,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="CheckList" id="oor-3g-ayO">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Ux8-cg-jhY">
-                            <connections>
-                                <segue destination="jzq-IV-zH4" kind="show" identifier="AddItemSegue" id="cwE-QR-CIo"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="Ux8-cg-jhY">
+                                <connections>
+                                    <segue destination="jzq-IV-zH4" kind="show" identifier="AddItemSegue" id="cwE-QR-CIo"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Delate" id="Gv8-Pe-65Q">
+                                <connections>
+                                    <action selector="delateItems:" destination="56V-V7-OQ5" id="NSv-uw-lSa"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3OH-zf-D4b" userLabel="First Responder" sceneMemberID="firstResponder"/>

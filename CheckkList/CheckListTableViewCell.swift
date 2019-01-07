@@ -10,12 +10,8 @@ import UIKit
 
 class CheckListTableViewCell: UITableViewCell {
 
-    
-    
-    
     @IBOutlet weak var checkmarkLabel: UILabel!
     @IBOutlet weak var todoTextLable: UILabel!
-    
     
     
     override func awakeFromNib() {

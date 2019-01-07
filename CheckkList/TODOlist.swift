@@ -55,6 +55,14 @@ class todoList  {
         todos.insert(item, at: index)
     }
     
+    func revomeCellInList(removeItems: [ChecklistItem] ) {
+        for item in removeItems {
+            if let index = todos.index(of :item) {
+                todos.remove(at: index)
+            }
+        }
+    }
+    
     private func randomTitle() -> String {
         var titles = ["Title", "Car", "Wolf", "cebyek", "kek", "LOL"]
         let randomNumbe = Int.random(in: 0 ..< titles.count - 1)

@@ -25,6 +25,19 @@ class ChecklistViewController: UITableViewController {
     }
     
     
+    @IBAction func delateItems(_ sender: Any) {
+        if let secletedRows = tableView.indexPathsForSelectedRows {
+            var itemsToRemove = [ChecklistItem]()
+            for indexPath in secletedRows {
+                itemsToRemove.append(todolist.todos[indexPath.row])
+            }
+            todolist.revomeCellInList(removeItems: itemsToRemove)
+            tableView.beginUpdates()
+            tableView.deleteRows(at: secletedRows, with: .automatic)
+            tableView.endUpdates()
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         
         todolist = todoList()
@@ -32,12 +45,13 @@ class ChecklistViewController: UITableViewController {
         super.init(coder: aDecoder)
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.leftBarButtonItem = editButtonItem
+        tableView.allowsMultipleSelectionDuringEditing = true
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -58,10 +72,16 @@ class ChecklistViewController: UITableViewController {
         return cell
     }
     
-    
-    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        todolist.moveCellInList(item: todolist.todos[sourceIndexPath.row], to: destinationIndexPath.row)
-        tableView.reloadData()
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView.isEditing {
+            return
+        }
+        if let cell = tableView.cellForRow(at: indexPath){
+            let item = todolist.todos[indexPath.row]
+            item.toggleChecked()
+            configureCheckMark(for: cell, with: item)
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -72,17 +92,16 @@ class ChecklistViewController: UITableViewController {
         tableView.deleteRows(at: indexPaths, with: .automatic)
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath){
-            let item = todolist.todos[indexPath.row]
-            item.toggleChecked()
-            configureCheckMark(for: cell, with: item)
-        }
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        todolist.moveCellInList(item: todolist.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+        tableView.reloadData()
     }
     
+  
     func configorText(for cell: UITableViewCell, with item: ChecklistItem) {
         if let checkmarkCell = cell as? CheckListTableViewCell {
-              checkmarkCell.todoTextLable.text = item.text
+            checkmarkCell.todoTextLable.text = item.text
         }
     }
     
