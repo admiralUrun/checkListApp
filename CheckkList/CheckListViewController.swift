@@ -13,8 +13,8 @@ class ChecklistViewController: UITableViewController {
     var todolist : todoList
     
     @IBOutlet var deleteBarItem: UIBarButtonItem!
-    
     @IBOutlet var addButtonItem: UIBarButtonItem!
+    
     @IBAction func addItem(_ sender: Any) {
         
         let newRowIndex = todolist.todos.count
@@ -68,7 +68,7 @@ class ChecklistViewController: UITableViewController {
         }
         
     }
-    
+    // MARK: - tableView's
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return todolist.todos.count
     }
@@ -106,7 +106,7 @@ class ChecklistViewController: UITableViewController {
         todolist.moveCellInList(item: todolist.todos[sourceIndexPath.row], to: destinationIndexPath.row)
         tableView.reloadData()
     }
-    
+    // MARK: -
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
         if let checkmarkCell = cell as? CheckListTableViewCell {
             checkmarkCell.todoTextLable.text = item.text
