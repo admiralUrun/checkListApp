@@ -88,27 +88,5 @@ extension ItemDetailViewController: UITextFieldDelegate {
         return true
     }
     
-    
-    
-    
-    
-    
-    
-    
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

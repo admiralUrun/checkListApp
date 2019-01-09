@@ -8,20 +8,25 @@
 
 import Foundation
 
-
-
-
 class todoList  {
     
-    var  todos : [ChecklistItem] = []
+    
+    enum Priority: Int, CaseIterable {
+        case high, medium, low, no
+    }
+    
+    private var highPriorityTodos : [ChecklistItem] = []
+    private var mediumPriorityTodos : [ChecklistItem] = []
+    private var lowPriorityTodos : [ChecklistItem] = []
+    private var noPriorityTodos : [ChecklistItem] = []
     
     init() {
         
-       let row0Item = ChecklistItem()
-       let row1Item = ChecklistItem()
-       let row2Item = ChecklistItem()
-       let row3Item = ChecklistItem()
-       let row4Item = ChecklistItem()
+        let row0Item = ChecklistItem()
+        let row1Item = ChecklistItem()
+        let row2Item = ChecklistItem()
+        let row3Item = ChecklistItem()
+        let row4Item = ChecklistItem()
         
         
         row0Item.text = "Take a jog"
@@ -30,36 +35,79 @@ class todoList  {
         row3Item.text = "+Ultra"
         row4Item.text = "lol"
         
-        todos.append(row0Item)
-        todos.append(row1Item)
-        todos.append(row2Item)
-        todos.append(row3Item)
-        todos.append(row4Item)
+       addtodo(row0Item, for: .medium)
+        addtodo(row1Item, for: .medium)
+        addtodo(row2Item, for: .medium)
+        addtodo(row3Item, for: .medium)
+        addtodo(row4Item, for: .medium)
         
     }
+    func addtodo(_ item:ChecklistItem, for piortity: Priority,at index: Int = -1) {
+        switch piortity {
+        case .high:
+            if index < 0 {
+             highPriorityTodos.append(item)
+            } else {
+                highPriorityTodos.insert(item, at: index)
+            }
+        case .medium:
+            if index < 0 {
+                mediumPriorityTodos.append(item)
+            } else {
+                mediumPriorityTodos.insert(item, at: index)
+            }
+        case .low:
+            if index < 0 {
+                lowPriorityTodos.append(item)
+            } else {
+                lowPriorityTodos.insert(item, at: index)
+            }
+        case .no:
+            if index < 0 {
+                noPriorityTodos.append(item)
+            } else {
+                noPriorityTodos.insert(item, at: index)
+            }
+        }
+    }
     
+    func todoList(for piority: Priority) -> [ChecklistItem] {
+        switch piority {
+        case .high:
+            return highPriorityTodos
+        case .medium:
+            return mediumPriorityTodos
+        case .low:
+            return lowPriorityTodos
+        case .no:
+            return noPriorityTodos
+        }
+    }
     
     func newTodo() -> ChecklistItem {
         let item =  ChecklistItem()
         item.text = randomTitle()
         item.checked = true
-        todos.append(item)
+        mediumPriorityTodos.append(item)
         return item
     }
     
-    func moveCellInList(item: ChecklistItem, to index: Int) {
-        guard let currentIndex = todos.index(of: item) else {
-            return
-        }
-        todos.remove(at: currentIndex)
-        todos.insert(item, at: index)
+    func moveCellInList(item: ChecklistItem,from sourcePriority:Priority, at sourceIndex:Int, to destinationPriority: Priority, at destinationIndex: Int) {
+        revomeCellInList(remove: item, from: sourcePriority, at: sourceIndex)
+        addtodo(item, for: destinationPriority, at: destinationIndex)
+        
     }
     
-    func revomeCellInList(removeItems: [ChecklistItem] ) {
-        for item in removeItems {
-            if let index = todos.index(of :item) {
-                todos.remove(at: index)
-            }
+    func revomeCellInList(remove item:ChecklistItem, from priority: Priority, at index: Int ) {
+        switch priority {
+        case .high:
+            highPriorityTodos.remove(at: index)
+        case .medium:
+            mediumPriorityTodos.remove(at: index)
+        case .low:
+            lowPriorityTodos.remove(at: index)
+        case .no:
+            noPriorityTodos.remove(at: index)
         }
     }
     

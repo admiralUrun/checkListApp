@@ -10,16 +10,20 @@ import UIKit
 
 class ChecklistViewController: UITableViewController {
     
-    var todolist : todoList
+    var toDolist : todoList
+    
+    private func priorityForSectionIndex(index:Int) -> todoList.Priority? {
+        return todoList.Priority(rawValue: index)
+    }
     
     @IBOutlet var deleteBarItem: UIBarButtonItem!
     @IBOutlet var addButtonItem: UIBarButtonItem!
     
     @IBAction func addItem(_ sender: Any) {
         
-        let newRowIndex = todolist.todos.count
+        let newRowIndex = toDolist.todoList(for: .medium).count
         
-        _ = todolist.newTodo()
+        _ = toDolist.newTodo()
         
         let indexPath = IndexPath(row: newRowIndex, section: 0)
         let indexPaths = [indexPath]
@@ -27,14 +31,17 @@ class ChecklistViewController: UITableViewController {
         
     }
     
-    
     @IBAction func deleteItems(_ sender: Any) {
         if let secletedRows = tableView.indexPathsForSelectedRows {
-            var itemsToRemove = [ChecklistItem]()
             for indexPath in secletedRows {
-                itemsToRemove.append(todolist.todos[indexPath.row])
+                if let priority = priorityForSectionIndex(index: indexPath.section) {
+                    let todos = toDolist.todoList(for: priority)
+                    let rowToDelete = indexPath.row > todos.count - 1 ? todos.count - 1 : indexPath.row
+                    let item = todos[rowToDelete]
+                    
+                    toDolist.revomeCellInList(remove: item, from: priority, at: rowToDelete)
+                }
             }
-            todolist.revomeCellInList(removeItems: itemsToRemove)
             tableView.beginUpdates()
             tableView.deleteRows(at: secletedRows, with: .automatic)
             tableView.endUpdates()
@@ -43,20 +50,21 @@ class ChecklistViewController: UITableViewController {
     
     required init?(coder aDecoder: NSCoder) {
         
-        todolist = todoList()
+        toDolist = todoList()
         
         super.init(coder: aDecoder)
     }
     // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-       self.navigationItem.rightBarButtonItem = nil
+        self.navigationItem.rightBarButtonItem = nil
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
         navigationItem.leftBarButtonItem = editButtonItem
         
         tableView.allowsMultipleSelectionDuringEditing = true
+        
     }
     // MARK: -
     override func setEditing(_ editing: Bool, animated: Bool) {
@@ -64,20 +72,26 @@ class ChecklistViewController: UITableViewController {
         if tableView.isEditing {
             self.navigationItem.rightBarButtonItem = self.deleteBarItem
         } else {
-         self.navigationItem.rightBarButtonItem = self.addButtonItem
+            self.navigationItem.rightBarButtonItem = self.addButtonItem
         }
         
     }
     // MARK: - tableView's
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return todolist.todos.count
+        if let priority = priorityForSectionIndex(index: section) {
+            return toDolist.todoList(for: priority).count
+        }
+        return 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CheckListItem", for: indexPath)
-        let item = todolist.todos[indexPath.row]
-        configureText(for: cell, with: item)
-        configureCheckMark(for: cell, with: item)
+        if let priority = priorityForSectionIndex(index: indexPath.section) {
+            let items = toDolist.todoList(for: priority)
+            let item = items[indexPath.row]
+            configureText(for: cell, with: item)
+            configureCheckMark(for: cell, with: item)
+        }
         
         return cell
     }
@@ -87,25 +101,59 @@ class ChecklistViewController: UITableViewController {
             return
         }
         if let cell = tableView.cellForRow(at: indexPath){
-            let item = todolist.todos[indexPath.row]
-            item.toggleChecked()
-            configureCheckMark(for: cell, with: item)
-            tableView.deselectRow(at: indexPath, animated: true)
+            if let priority = priorityForSectionIndex(index: indexPath.section) {
+                let items = toDolist.todoList(for: priority)
+                let item = items[indexPath.row]
+                item.toggleChecked()
+                configureCheckMark(for: cell, with: item)
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         }
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
-        todolist.todos.remove(at: indexPath.row)
-        let indexPaths = [indexPath]
-        tableView.deleteRows(at: indexPaths, with: .automatic)
+        if let priority = priorityForSectionIndex(index: indexPath.section) {
+            let item = toDolist.todoList(for: priority)[indexPath.row]
+            
+            toDolist.revomeCellInList(remove: item, from: priority, at: indexPath.row)
+            
+            let indexPaths = [indexPath]
+            tableView.deleteRows(at: indexPaths, with: .automatic)
+        }
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        todolist.moveCellInList(item: todolist.todos[sourceIndexPath.row], to: destinationIndexPath.row)
+        if let srcPriority = priorityForSectionIndex(index: sourceIndexPath.section),
+            let destPrority = priorityForSectionIndex(index: destinationIndexPath.section) {
+            let item = toDolist.todoList(for: srcPriority)[sourceIndexPath.row]
+            
+            toDolist.moveCellInList(item: item, from: srcPriority , at: sourceIndexPath.row, to: destPrority, at: destinationIndexPath.row)
+        }
         tableView.reloadData()
     }
+    
+    override func tableView(_ tableView: UITableView, sectionForSectionIndexTitle title: String, at index: Int) -> Int {
+        return UILocalizedIndexedCollation.current().section(forSectionIndexTitle: index)
+    }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        var title: String? = nil
+        if let priority = priorityForSectionIndex(index: section) {
+            switch priority {
+            case .high:
+                title = "High Priority"
+            case .medium:
+                title = "Medium Priority"
+            case .low:
+                title = "Low Priority"
+            case .no:
+                title = "Someday"
+            }
+        }
+        return title
+    }
+    
     // MARK: -
     func configureText(for cell: UITableViewCell, with item: ChecklistItem) {
         if let checkmarkCell = cell as? CheckListTableViewCell {
@@ -128,17 +176,25 @@ class ChecklistViewController: UITableViewController {
         if segue.identifier == "AddItemSegue" {
             if let itemDitailViewControllerr = segue.destination as? ItemDetailViewController {
                 itemDitailViewControllerr.deleget = self
-                itemDitailViewControllerr.todolist = todolist
+                itemDitailViewControllerr.todolist = toDolist
             }
         } else if segue.identifier == "EditItem" {
             if let itemDitailViewControllerr = segue.destination as? ItemDetailViewController {
-                if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
-                    let item = todolist.todos[indexPath.row]
+                if let cell = sender as? UITableViewCell,
+                    let indexPath = tableView.indexPath(for: cell),
+                    let priority = priorityForSectionIndex(index: indexPath.section)
+                {
+                    
+                    let item = toDolist.todoList(for: priority)[indexPath.row]
                     itemDitailViewControllerr.itemToEdit = item
                     itemDitailViewControllerr.deleget = self
                 }
             }
         }
+    }
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return todoList.Priority.allCases.count
     }
     
 }
@@ -152,19 +208,24 @@ extension ChecklistViewController: ItemDetailViewControllerDelegate {
     
     func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiAdding item: ChecklistItem) {
         navigationController?.popViewController(animated: true)
-        let rowIndex = todolist.todos.count - 1
-        let indexPahth = IndexPath(row: rowIndex, section: 0)
+        let rowIndex = toDolist.todoList(for: .medium).count - 1
+        let indexPahth = IndexPath(row: rowIndex, section: todoList.Priority.medium.rawValue)
         let indexPahths = [indexPahth]
         tableView.insertRows(at: indexPahths, with: .automatic)
     }
     
     func itemDitailViewControllerr(_ controller: ItemDetailViewController, didFinishiEditing item: ChecklistItem) {
-        if let index = todolist.todos.index(of: item) {
-            let indexPath = IndexPath(row: index, section: 0)
-            if let cell = tableView.cellForRow(at: indexPath) {
-                configureText(for: cell, with: item)
+        
+        for priorty in todoList.Priority.allCases {
+            let current = toDolist.todoList(for: priorty)
+            if let index = current.index(of: item) {
+                let indexPath = IndexPath(row: index, section: priorty.rawValue)
+                if let cell = tableView.cellForRow(at: indexPath) {
+                    configureText(for: cell, with: item)
+                }
             }
         }
+        
         navigationController?.popViewController(animated: true)
     }
     
