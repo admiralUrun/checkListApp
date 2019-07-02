@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:CheckkList.xcodeproj">
+      location = "self:ToDos.xcodeproj">
    </FileRef>
 </Workspace>
